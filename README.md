@@ -25,8 +25,8 @@ The application should provide the following functionality:
 
 - library tracks its readers (users). Show a history of a book (when and by whom was taken)
 
-- implement sending notifications by mail to people who took a book (ìYou took the
-following books in our libraryî)
+- implement sending notifications by mail to people who took a book (‚ÄúYou took the
+following books in our library‚Äù)
 
 
 Implementation requirements:
@@ -38,4 +38,4 @@ sorting by book titles and author names. No complex design required.
 
 3. Minimize number of post backs.
 
-4. You must not use an existing ORM like Entity Framework, NHibernate etc. for working with the database.
+4. No usage of an existing ORM like Entity Framework, NHibernate etc. for working with the database is allowed.
