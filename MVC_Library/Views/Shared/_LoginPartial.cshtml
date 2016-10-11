@@ -1,0 +1,14 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <text>
+        Hello, @Html.ActionLink(User.Identity.Name, "EditByName", "User", routeValues: new { name = User.Identity.Name }, htmlAttributes: new { @class = "username", title = "Manage" })!
+        @using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        }
+    </text>
+}
+else {
+        <li>@Html.ActionLink("Register", "Create", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}

@@ -1,0 +1,44 @@
+﻿@model MVC_Library.Models.AuthorModels
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-8 col-md-offset-2">
+    <h2>Author Details</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="display-label">
+                <strong>@Html.DisplayNameFor(model => model.Name)</strong>
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+
+            <div class="display-label">
+                <strong>@Html.DisplayNameFor(model => model.Country)</strong>
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Country)
+            </div>
+            @*@foreach (var book in Model.Books)
+                {
+                    <td>
+                        @Html.DisplayFor(bookmodel => book.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(bookmodel => book.Year)
+                    </td>
+                }*@
+        </fieldset>
+    }
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

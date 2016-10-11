@@ -1,0 +1,45 @@
+﻿@model MVC_Library.Models.AuthorModels
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-8 col-md-offset-2">
+    <h2>@ViewBag.Title</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.Name)</strong>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.Country)</strong>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Country)
+                @Html.ValidationMessageFor(model => model.Country)
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

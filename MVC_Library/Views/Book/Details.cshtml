@@ -1,0 +1,55 @@
+﻿@model MVC_Library.Models.BookModels
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-8 col-md-offset-2">
+    <h2>Details</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="display-label">
+                <strong>@Html.DisplayNameFor(model => model.Title)</strong>
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Title)
+            </div>
+
+            <div class="display-label">
+                <strong>@Html.DisplayNameFor(model => model.Year)</strong>
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Year)
+            </div>
+            
+            <div class="display-label">
+                <strong>@Html.DisplayNameFor(model => model.Quantity)</strong>
+            </div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Quantity)
+            </div>
+
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.AuthorList)</strong>
+            </div>
+            <div class="editor-field">
+                @foreach (var al in Model.AuthorList)
+                {
+                    @Html.ActionLink(al.Name, "Details", "Author", routeValues: new { id = al.Id }, htmlAttributes: new { @class = "author", title = "view" }) <br />
+                }
+            </div>
+
+           <br />
+
+        </fieldset>
+    }
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

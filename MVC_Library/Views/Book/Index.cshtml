@@ -1,0 +1,117 @@
+﻿@model IEnumerable<MVC_Library.Models.BookModels>
+
+@{
+    ViewBag.Title = "Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-8 col-md-offset-2">
+    <h2>Books</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @Html.ActionLink("Add book", "Create", "Book", routeValues: null, htmlAttributes: null)
+
+        <style type="text/css">
+            .gTable {
+                border-collapse: collapse;
+                border: 1px solid #c0c0c0;
+                width: 100%;
+            }
+
+                .gTable tr td {
+                    padding: 5px;
+                    border: 1px solid #c0c0c0;
+                }
+
+                .gTable tr:nth-child(2n+1) {
+                    background-color: #eaeaea;
+                }
+
+                .gTable tr th {
+                    background-color: #8fd9ff;
+                }
+
+            tfoot tr td {
+                background-color: #ffd800 !important;
+            }
+
+            .gTable tr:hover {
+                background-color: #fffddc;
+            }
+
+            .selectedRow {
+                background-color: #ff6a00 !important;
+            }
+        </style>
+        <div id="tblGrid">
+            @{
+        var g_style = new WebGrid(source: Model,
+              rowsPerPage: 10);
+            @g_style.GetHtml(
+tableStyle: "gTable",
+headerStyle: "gHead",
+footerStyle: "gFooter",
+rowStyle: "gridRow",
+alternatingRowStyle: "gridAltRow",
+        columns: g_style.Columns(
+                g_style.Column("Id", "Id"),
+                g_style.Column("Title", "Title"),
+                        g_style.Column("Quantity", "Quantity")))
+            }
+        </div>
+
+        @*<table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Year)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AuthorList)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Quantity)
+                            </th>
+                            <th>
+                                Operations
+                            </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                    <p>
+                                        @if (item.Quantity > 0)
+                                        {
+                                            <button onclick="location.href='@Url.Action("TakeBook", "Book", new { bookId = item.Id, username = User.Identity.Name })';return false;">Take</button>
+                                        }
+                                    </p>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Year)
+                                </td>
+                                <td>
+                                    @foreach (var al in item.AuthorList)
+                                    {
+                                        @Html.ActionLink(al.Name, "Details", "Author", routeValues: new { id = al.Id }, htmlAttributes: new { @class = "author", title = "view" }) <br />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+            </div>*@
+    }
+</div>

@@ -1,0 +1,54 @@
+﻿@using System.Net;
+@using System.Net.Mail;
+
+@{
+    var errorMessage = "";
+    var debuggingFlag = true;
+    try
+    {
+        var message = new MailMessage(Request["msgMyMail"], Request["msgEmail"], "email subject", Request["msgBody"]);
+        message.SubjectEncoding = System.Text.Encoding.UTF8;
+        message.BodyEncoding = System.Text.Encoding.UTF8;
+        message.IsBodyHtml = true;
+        var smtp = new SmtpClient("smtp.gmail.com", 587);
+        smtp.EnableSsl = true; 
+        smtp.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
+        smtp.Credentials = new NetworkCredential(Request["msgMyMail"], Request["msgPassword"]);
+        smtp.Timeout = 20000;
+        smtp.Send(message);
+    }
+    catch (Exception ex)
+    {
+        errorMessage = ex.ToString();
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mail service</title>
+</head>
+<body>
+    <div class="col-md-8 col-md-offset-2">
+        <h2>@ViewBag.Title</h2>
+        @if (errorMessage == "")
+        {
+            <p>
+                An email message has been sent :
+            </p>
+        <pre style="white-space: normal"><b>@Request["msgBody"]</b></pre>
+        }
+        else
+        {
+            <p><b>The email was <em>not</em> sent.</b></p>
+            if (debuggingFlag)
+            {
+                <p>The following error was reported:</p>
+                <p><em>@errorMessage</em></p>
+            }
+        }
+    </div>
+</body>
+
+
+
+</html>

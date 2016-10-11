@@ -1,0 +1,67 @@
+﻿@model MVC_Library.Models.BookModels
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-8 col-md-offset-2">
+    <h2>Book edit</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.Title)</strong>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.Year)</strong>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Year )
+                @Html.ValidationMessageFor(model => model.Year)
+            </div>
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.Quantity)</strong>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Quantity)
+                @Html.ValidationMessageFor(model => model.Quantity)
+            </div>
+
+            <div class="editor-label">
+                <strong>@Html.LabelFor(model => model.AuthorList)</strong>
+            </div>
+            <div class="editor-field">
+                @*@Html.ListBoxFor(model => model.SelectedFields, new MultiSelectList(ViewBag.AuthorList, "Id", "Name"), new { id = "authors" })*@
+                @*@Html.ListBoxFor(model => model.SelectedFields, new MultiSelectList(Model.AuthorList, "Id", "Name"), new { id = "authors" })*@
+                @Html.ListBoxFor(model => model.SelectedAuthors, new MultiSelectList(ViewBag.AuthorList, "Id", "Name", Model.SelectedAuthors), new { id = "authors" })
+            </div>
+            @*<div class="editor-field">
+            @Html.ListBoxFor(model => model.SelectedFields, new MultiSelectList(ViewBag.AuthorList, Model.SelectedFields), new { id = "authors" })
+
+            @Html.ListBox(model => model.SelectedFields, new MultiSelectList(Model.AuthorList, "Id", "Name"), new { id = "authors" })
+            @Html.ListBoxFor(m => m.SelectedFields, Model.AuthorList.Select(f => new SelectListItem { Text = f.Name, Value = f.Id }), new { Multiple = "multiple" })
+
+        </div>*@
+
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

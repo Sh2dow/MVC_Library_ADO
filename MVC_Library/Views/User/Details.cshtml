@@ -1,0 +1,82 @@
+﻿@model MVC_Library.Models.UserModels
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-offset-2">
+    <div class="col-md-4">
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <div class="display-label">
+                    <strong>@Html.DisplayNameFor(model => model.Name)</strong>
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+
+                <div class="display-label">
+                    <strong>@Html.DisplayNameFor(model => model.Email)</strong>
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Email)
+                </div>
+
+                <div class="display-label">
+                    <strong>@Html.DisplayNameFor(model => model.BooksTaken)</strong>
+                </div>
+                <div class="display-field">
+                    @foreach (var book in Model.BooksTaken)
+                    {
+                        <p>
+                            <text>"</text>@Html.DisplayFor(bookmodel => book.Key)<text>" - </text>@Html.DisplayFor(bookmodel => book.Value)
+                        </p>
+                    }
+                </div>
+            </fieldset>
+        }
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+
+    <div class="col-md-8">
+
+        <h2>Send mail</h2>
+        <form method="POST" action="SendMail.cshtml">
+            <br />
+            Your name:
+            <input type="text" name="msgName" value=@User.Identity.Name />
+            <br />
+            Your email address:
+            <input type="text" name="msgMyMail" />
+            <br />
+            Mailto:
+            <input name="msgEmail" value=@Html.DisplayTextFor(model => model.Email) readonly="readonly" />
+            <br />
+            Your mail password:
+            <input name="msgPassword" type="password" />
+            <br />
+            Message: <br />
+            <textarea name="msgBody" style="min-width: 300px; min-height: 200px; border: 2px solid;  ">
+                Dear @Model.Name !
+                You took the following books in our library:
+                @foreach (var book in Model.BooksTaken)
+                {
+                    <text>"</text>@Html.DisplayFor(bookmodel => book.Key)<text>", </text>
+                }
+                please, return them!
+            </textarea>
+            <br />
+            <input type="submit" value="Send" />
+        </form>
+    </div>
+</div>
+

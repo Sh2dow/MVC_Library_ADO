@@ -1,0 +1,62 @@
+﻿@using System.Net;
+@using System.Net.Mail;
+
+@{
+    var customerName = Request["customerName"];
+    var customerEmail = Request["customerEmail"];
+    var customerRequest = Request["customerRequest"];
+    var errorMessage = "";
+    var debuggingFlag = true;
+    try
+    {
+        // Initialize WebMail helper
+        WebMail.SmtpServer = "smtp.gmail.com";
+        WebMail.SmtpPort = 587;
+        WebMail.EnableSsl = true;
+        WebMail.SmtpUseDefaultCredentials = true;
+        WebMail.UserName = "";
+        WebMail.Password = "";
+        WebMail.From = "";
+        
+
+        // Send email
+        WebMail.Send(to: customerEmail,
+            subject: "Help request from - " + customerName,
+            body: customerRequest
+        );
+    }
+    catch (Exception ex)
+    {
+        errorMessage = ex.Message;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mail service</title>
+</head>
+<body>
+    <p>Sorry to hear that you are having trouble, <b>@customerName</b>.</p>
+    @if (errorMessage == "")
+    {
+        <p>
+            An email message has been sent :
+        </p>
+        <p><b>@customerRequest</b></p>
+    }
+    else
+    {
+        <p><b>The email was <em>not</em> sent.</b></p>
+        <p>
+            Please check that the code in the ProcessRequest page has
+            correct settings for the SMTP server name, a user name,
+            a password, and a "from" address.
+        </p>
+        if (debuggingFlag)
+        {
+            <p>The following error was reported:</p>
+            <p><em>@errorMessage</em></p>
+        }
+    }
+</body>
+</html>

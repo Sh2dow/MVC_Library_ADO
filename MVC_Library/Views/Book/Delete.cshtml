@@ -1,0 +1,47 @@
+﻿@model MVC_Library.Models.BookModels
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="col-md-8 col-md-offset-2">
+    <h2>Delete</h2>
+    <h3>Are you sure you want to delete this?</h3>
+    <fieldset>
+        <div class="editor-label">
+            <strong>@Html.LabelFor(model => model.Title)</strong>
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Title)
+        </div>
+        <div class="editor-label">
+            <strong>@Html.LabelFor(model => model.Year)</strong>
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Year)
+        </div>
+        <div class="editor-label">
+            <strong>@Html.LabelFor(model => model.Quantity)</strong>
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Quantity)
+        </div>
+
+        <div class="editor-label">
+            <strong>@Html.DisplayNameFor(model => model.AuthorList)</strong>
+        </div>
+        <div>
+            @foreach (var al in Model.AuthorList)
+            {
+                @Html.ActionLink(al.Name, "Details", "Author", routeValues: new { id = al.Id }, htmlAttributes: new { @class = "author", title = "view" }) <br />
+            }
+        </div>
+        <br />
+    </fieldset>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            <input type="submit" value="Delete" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+</div>
